@@ -48,6 +48,8 @@
         }
         .page { display: none; }
         .page.active { display: block; }
+        .modal { display: none; }
+        .modal.active { display: flex; }
         .filter-btn.active {
             background-color: #0d9488; /* primary */
             color: white;
@@ -65,11 +67,23 @@
         #review-confirmation, #profile-save-confirmation {
             transition: opacity 0.5s ease-in-out;
         }
+        /* Custom scrollbar for search results */
+        #search-results-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        #search-results-container::-webkit-scrollbar-track {
+            background: #f5f3f0;
+        }
+        #search-results-container::-webkit-scrollbar-thumb {
+            background-color: #0d9488;
+            border-radius: 20px;
+            border: 3px solid #f5f3f0;
+        }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-40">
         <div class="container mx-auto px-4 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0"><a href="#" class="text-2xl font-bold text-charcoal nav-link" data-target="home">ShopSphere</a></div>
@@ -78,7 +92,7 @@
                     <a href="#" class="text-charcoal-light hover:text-primary transition-colors nav-link" data-target="shop">Shop</a>
                 </nav>
                 <div class="flex items-center space-x-4">
-                    <button class="text-charcoal-light hover:text-primary"><i data-lucide="search" class="w-5 h-5"></i></button>
+                    <button id="search-icon-btn" class="text-charcoal-light hover:text-primary"><i data-lucide="search" class="w-5 h-5"></i></button>
                     <a href="#" class="text-charcoal-light hover:text-primary nav-link" data-target="profile"><i data-lucide="user" class="w-5 h-5"></i></a>
                     <a href="#" class="relative text-charcoal-light hover:text-primary nav-link" data-target="cart">
                         <i data-lucide="shopping-cart" class="w-5 h-5"></i>
@@ -87,14 +101,6 @@
                     <button id="mobile-menu-button" class="md:hidden text-charcoal-light hover:text-primary"><i data-lucide="menu" class="w-6 h-6"></i></button>
                 </div>
             </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
-            <nav class="flex flex-col p-4 space-y-2">
-                <a href="#" class="text-charcoal-light hover:bg-secondary p-2 rounded-md nav-link" data-target="home">Home</a>
-                <a href="#" class="text-charcoal-light hover:bg-secondary p-2 rounded-md nav-link" data-target="shop">Shop</a>
-                <a href="#" class="text-charcoal-light hover:bg-secondary p-2 rounded-md nav-link" data-target="profile">Profile</a>
-                <a href="#" class="text-charcoal-light hover:bg-secondary p-2 rounded-md nav-link" data-target="cart">Cart</a>
-            </nav>
         </div>
     </header>
 
@@ -166,7 +172,7 @@
                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 pb-4">
                                    <div class="mb-2 sm:mb-0">
                                        <p class="font-semibold text-charcoal">Order #SHP582A4</p>
-                                       <p class="text-sm text-charcoal-light">Date: 2024-07-22</p>
+                                       <p class="text-sm text-charcoal-light">Date: 2025-07-22</p>
                                    </div>
                                    <div class="flex items-center gap-4">
                                        <span class="font-bold text-charcoal">$110.00</span>
@@ -177,7 +183,7 @@
                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 pb-4">
                                     <div class="mb-2 sm:mb-0">
                                        <p class="font-semibold text-charcoal">Order #SHP519F8</p>
-                                       <p class="text-sm text-charcoal-light">Date: 2024-06-12</p>
+                                       <p class="text-sm text-charcoal-light">Date: 2025-06-12</p>
                                    </div>
                                    <div class="flex items-center gap-4">
                                        <span class="font-bold text-charcoal">$89.00</span>
@@ -194,13 +200,13 @@
                         <div class="bg-white p-8 rounded-lg shadow-md text-center">
                             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80" alt="User Avatar" class="w-32 h-32 rounded-full object-cover mx-auto mb-4 border-4 border-secondary">
                             <h2 id="display-name-avatar" class="text-xl font-semibold text-charcoal">Emily Carter</h2>
-                            <p class="text-charcoal-light text-sm">Joined on July 20, 2023</p>
+                            <p class="text-charcoal-light text-sm">Joined on July 20, 2024</p>
                         </div>
                         <div class="bg-white p-6 sm:p-8 rounded-lg shadow-md">
                             <h2 class="text-xl font-semibold text-charcoal mb-4">Account Settings</h2>
-                            <div class="space-y-3">
-                                 <button class="w-full text-left text-charcoal-light hover:text-primary transition-colors p-2 rounded-md hover:bg-secondary">Change Password</button>
-                                 <button class="w-full text-left text-charcoal-light hover:text-primary transition-colors p-2 rounded-md hover:bg-secondary">Manage Addresses</button>
+                            <div class="space-y-1">
+                                 <button id="change-password-btn" class="w-full text-left text-charcoal-light hover:text-primary transition-colors p-2 rounded-md hover:bg-secondary">Change Password</button>
+                                 <button id="manage-addresses-btn" class="w-full text-left text-charcoal-light hover:text-primary transition-colors p-2 rounded-md hover:bg-secondary">Manage Addresses</button>
                                  <button class="w-full text-left text-red-600 hover:text-red-800 font-semibold p-2 rounded-md hover:bg-red-50">Logout</button>
                             </div>
                         </div>
@@ -210,12 +216,105 @@
         </div>
     </main>
     
-    <footer class="bg-charcoal text-gray-300 mt-16"><div class="container mx-auto px-4 lg:px-8 py-12"><div class="border-t border-gray-700 pt-6 text-center text-gray-500"><p>&copy; 2024 ShopSphere. All Rights Reserved.</p></div></div></footer>
+    <footer class="bg-charcoal text-gray-300 mt-16"><div class="container mx-auto px-4 lg:px-8 py-12"><div class="border-t border-gray-700 pt-6 text-center text-gray-500"><p>&copy; 2025 ShopSphere. All Rights Reserved.</p></div></div></footer>
+
+    <div id="search-modal" class="modal fixed inset-0 z-50 items-start justify-center p-4 pt-[20vh] bg-black/50 backdrop-blur-sm">
+        <div class="bg-secondary rounded-lg shadow-xl w-full max-w-2xl relative">
+            <button class="close-modal-btn absolute -top-2 -right-2 text-white bg-primary rounded-full p-1"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div class="p-4">
+                <input id="search-input" type="text" placeholder="Search for products..." class="w-full text-lg p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+            </div>
+            <div id="search-results-container" class="p-4 max-h-[50vh] overflow-y-auto">
+                 <p id="search-placeholder" class="text-center text-charcoal-light py-8">Start typing to see product results.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="password-modal" class="modal fixed inset-0 z-50 items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md relative p-8">
+            <button class="close-modal-btn absolute top-4 right-4 text-charcoal-light hover:text-primary"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h2 class="text-2xl font-bold text-charcoal mb-6">Change Password</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="current-password" class="block text-sm font-medium text-charcoal-light mb-1">Current Password</label>
+                    <input type="password" id="current-password" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="new-password" class="block text-sm font-medium text-charcoal-light mb-1">New Password</label>
+                    <input type="password" id="new-password" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="confirm-password" class="block text-sm font-medium text-charcoal-light mb-1">Confirm New Password</label>
+                    <input type="password" id="confirm-password" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-4 mt-8">
+                <button class="close-modal-btn text-charcoal-light font-semibold py-2 px-4 rounded-lg hover:bg-gray-100">Cancel</button>
+                <button id="save-password-btn" class="bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-6 rounded-lg">Save Password</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="address-modal" class="modal fixed inset-0 z-50 items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+         <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl relative p-8">
+            <button class="close-modal-btn absolute top-4 right-4 text-charcoal-light hover:text-primary"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h2 class="text-2xl font-bold text-charcoal mb-6">Manage Addresses</h2>
+            <div class="space-y-4">
+                <div class="border border-primary rounded-lg p-4 bg-primary/5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-charcoal">Primary: Emily Carter</p>
+                            <p class="text-charcoal-light">123 Market St, San Francisco, CA 94103</p>
+                            <p class="text-charcoal-light">(555) 123-4567</p>
+                        </div>
+                        <span class="text-xs font-medium text-primary py-1 px-2 border border-primary rounded-full">Default</span>
+                    </div>
+                </div>
+                <button id="add-new-address-form-btn" class="w-full text-primary border-2 border-dashed border-gray-300 hover:border-primary hover:bg-primary/5 p-4 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                     <i data-lucide="plus" class="w-5 h-5"></i> Add New Address
+                </button>
+                <div id="new-address-form" class="hidden pt-4 mt-4 border-t">
+                    <h3 class="text-xl font-semibold text-charcoal mb-4">New Address Details</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                         <div>
+                            <label class="block text-sm font-medium text-charcoal-light mb-1">Full Name</label>
+                            <input type="text" placeholder="Full Name" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal-light mb-1">Phone Number</label>
+                            <input type="tel" placeholder="(555) 555-5555" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                         <div class="sm:col-span-2">
+                            <label class="block text-sm font-medium text-charcoal-light mb-1">Street Address</label>
+                            <input type="text" placeholder="123 Main St" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal-light mb-1">City</label>
+                            <input type="text" placeholder="City" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                         <div>
+                            <label class="block text-sm font-medium text-charcoal-light mb-1">State</label>
+                            <input type="text" placeholder="State" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                         <div>
+                            <label class="block text-sm font-medium text-charcoal-light mb-1">Zip Code</label>
+                            <input type="text" placeholder="Zip Code" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-4 mt-4">
+                         <button id="cancel-new-address-btn" class="text-charcoal-light font-semibold py-2 px-4 rounded-lg hover:bg-gray-100">Cancel</button>
+                         <button id="save-new-address-btn" class="bg-primary hover:bg-primary-dark text-white font-semibold py-2 px-6 rounded-lg">Save Address</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- DATA ---
-              const products = [
+             const products = [
                 { id: 1, name: 'Chronos Smartwatch', price: 299.00, image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80', category: 'Electronics', rating: 4.8, reviews: 120, description: 'A stylish and powerful smartwatch to keep you connected.', sampleReviews: [{rating: 5, author: 'Alex J.', date: '2024-07-15', comment: 'Absolutely love it! The battery life is amazing and it looks so sleek.'}, {rating: 4, author: 'Maria S.', date: '2024-07-10', comment: 'Great watch, but the strap could be more comfortable.'}] },
                 { id: 2, name: 'Aura Headphones', price: 149.00, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', category: 'Electronics', rating: 4.6, reviews: 98, description: 'Immerse yourself in high-fidelity sound.', sampleReviews: [{rating: 5, author: 'David L.', date: '2024-06-28', comment: 'The noise cancellation is top-notch. Perfect for my commute.'}] },
                 { id: 3, name: 'Nomad Leather Backpack', price: 189.00, image: 'https://images.pexels.com/photos/3155047/pexels-photo-3155047.jpeg?auto=format&fit=crop&w=800&q=80', category: 'Accessories', rating: 4.9, reviews: 215, description: 'Crafted from genuine leather for your adventures.', sampleReviews: [{rating: 5, author: 'Jessica P.', date: '2024-07-20', comment: 'Stunning backpack. The quality of the leather is incredible and it has so many useful pockets.'}, {rating: 5, author: 'Tom B.', date: '2024-07-18', comment: 'Best backpack I have ever owned. Worth every penny.'}] },
@@ -230,6 +329,7 @@
 
             const elements = {
                 pages: document.querySelectorAll('.page'),
+                modals: document.querySelectorAll('.modal'),
                 navLinks: document.querySelectorAll('.nav-link'),
                 mobileMenuButton: document.getElementById('mobile-menu-button'),
                 mobileMenu: document.getElementById('mobile-menu'),
@@ -240,7 +340,6 @@
                 cartSummaryContainer: document.getElementById('cart-summary'),
                 cartCountElement: document.getElementById('cart-count'),
                 filterContainer: document.getElementById('filter-container'),
-                // Profile Page Elements
                 profileViewMode: document.getElementById('profile-view-mode'),
                 profileEditMode: document.getElementById('profile-edit-mode'),
                 displayName: document.getElementById('display-name'),
@@ -252,12 +351,26 @@
                 editEmail: document.getElementById('edit-email'),
                 editPhone: document.getElementById('edit-phone'),
                 editAddress: document.getElementById('edit-address'),
+                searchInput: document.getElementById('search-input'),
+                searchResultsContainer: document.getElementById('search-results-container'),
+                searchPlaceholder: document.getElementById('search-placeholder'),
+                newAddressForm: document.getElementById('new-address-form'),
+            };
+
+            const openModal = (modalId) => {
+                const modal = document.getElementById(modalId);
+                if(modal) modal.classList.add('active');
+            };
+            
+            const closeModal = () => {
+                elements.modals.forEach(modal => modal.classList.remove('active'));
             };
 
             const showPage = (pageId) => {
                 elements.pages.forEach(page => page.classList.toggle('active', page.id === pageId));
                 window.scrollTo(0, 0);
                 elements.mobileMenu.classList.add('hidden');
+                closeModal(); // Close any open modals when navigating
             };
 
             const renderStars = (rating, isDisplayOnly = false) => {
@@ -273,23 +386,26 @@
                     starsHTML += `<i data-lucide="star" class="w-4 h-4 ${isDisplayOnly ? 'text-gray-300' : 'star'}" data-index="${fullStars + i + 1}"></i>`;
                 return starsHTML;
             };
-
-            const renderProductCard = (product) => `
+            
+            const renderProductCard = (product, isSearchResult = false) => {
+                const buttonClass = isSearchResult ? 'view-product-from-search-btn' : 'view-product-btn';
+                return `
                 <div class="bg-white rounded-lg shadow-md overflow-hidden group">
-                    <div class="relative"><img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">${product.onSale ? '<div class="absolute top-2 left-2 bg-accent text-charcoal text-xs font-bold px-2 py-1 rounded">SALE</div>' : ''}<div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity"><button class="view-product-btn bg-white text-charcoal p-3 rounded-full hover:bg-primary hover:text-white transition-colors" data-id="${product.id}"><i data-lucide="eye" class="w-5 h-5"></i></button><button class="add-to-cart-btn bg-white text-charcoal p-3 rounded-full hover:bg-primary hover:text-white transition-colors" data-id="${product.id}"><i data-lucide="shopping-cart" class="w-5 h-5"></i></button></div></div>
+                    <div class="relative"><img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">${product.onSale ? '<div class="absolute top-2 left-2 bg-accent text-charcoal text-xs font-bold px-2 py-1 rounded">SALE</div>' : ''}<div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity"><button class="${buttonClass} bg-white text-charcoal p-3 rounded-full hover:bg-primary hover:text-white transition-colors" data-id="${product.id}"><i data-lucide="eye" class="w-5 h-5"></i></button><button class="add-to-cart-btn bg-white text-charcoal p-3 rounded-full hover:bg-primary hover:text-white transition-colors" data-id="${product.id}"><i data-lucide="shopping-cart" class="w-5 h-5"></i></button></div></div>
                     <div class="p-4"><h3 class="font-semibold text-charcoal">${product.name}</h3><div class="flex items-center mt-1"><div class="flex items-center">${renderStars(product.rating, true)}</div><span class="text-xs text-charcoal-light ml-2">(${product.reviews})</span></div><p class="text-primary font-bold mt-2">$${product.price.toFixed(2)}</p></div>
                 </div>`;
+            }
 
             const renderShopPage = (category = 'All') => {
                 const filteredProducts = category === 'All' ? products : products.filter(p => p.category === category);
-                elements.productListContainer.innerHTML = filteredProducts.map(renderProductCard).join('');
+                elements.productListContainer.innerHTML = filteredProducts.map(p => renderProductCard(p, false)).join('');
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.category === category));
                 lucide.createIcons();
             };
 
             const renderHomePage = () => {
                 const featuredProducts = products.filter(p => p.onSale || p.rating > 4.8).slice(0, 4);
-                elements.featuredProductListContainer.innerHTML = featuredProducts.map(renderProductCard).join('');
+                elements.featuredProductListContainer.innerHTML = featuredProducts.map(p => renderProductCard(p, false)).join('');
                 lucide.createIcons();
             };
 
@@ -401,99 +517,79 @@
             const submitReview = () => {
                 const starsContainer = document.getElementById('review-stars');
                 const commentEl = document.getElementById('review-comment');
-                
                 const rating = parseInt(starsContainer.dataset.rating);
                 const comment = commentEl.value.trim();
                 
-                if (rating === 0) {
-                    alert('Please select a star rating.');
-                    return;
-                }
-                if (comment === '') {
-                    alert('Please enter a comment for your review.');
+                if (rating === 0 || comment === '') {
+                    alert('Please provide a rating and a comment.');
                     return;
                 }
 
                 const product = products.find(p => p.id === currentProductId);
                 if (product) {
-                    const newReview = {
-                        rating,
-                        comment,
-                        author: 'You',
-                        date: new Date().toISOString().split('T')[0],
-                        isNew: true,
-                    };
-                    product.sampleReviews.unshift(newReview);
+                    product.sampleReviews.unshift({ rating, comment, author: 'You', date: new Date().toISOString().split('T')[0], isNew: true });
                     product.reviews++;
-                    
                     renderProductDetailPage(currentProductId);
-
                     const confirmationEl = document.getElementById('review-confirmation');
                     if(confirmationEl) {
                         confirmationEl.classList.remove('opacity-0');
-                        setTimeout(() => {
-                            confirmationEl.classList.add('opacity-0');
-                        }, 3000);
+                        setTimeout(() => confirmationEl.classList.add('opacity-0'), 3000);
                     }
                 }
             };
 
             const setProfileEditMode = (isEditing) => {
-                if (isEditing) {
-                    elements.profileViewMode.classList.add('hidden');
-                    elements.profileEditMode.classList.remove('hidden');
-                } else {
-                    elements.profileViewMode.classList.remove('hidden');
-                    elements.profileEditMode.classList.add('hidden');
-                }
+                elements.profileViewMode.classList.toggle('hidden', isEditing);
+                elements.profileEditMode.classList.toggle('hidden', !isEditing);
             };
 
             const saveProfileChanges = () => {
-                // Update display elements with values from input fields
                 elements.displayName.textContent = elements.editName.value;
                 elements.displayNameAvatar.textContent = elements.editName.value;
                 elements.displayEmail.textContent = elements.editEmail.value;
                 elements.displayPhone.textContent = elements.editPhone.value;
                 elements.displayAddress.textContent = elements.editAddress.value;
-
-                // Switch back to view mode
                 setProfileEditMode(false);
-
-                // Show confirmation message
                 const confirmationEl = document.getElementById('profile-save-confirmation');
                 if (confirmationEl) {
                     confirmationEl.classList.remove('opacity-0');
-                    setTimeout(() => {
-                        confirmationEl.classList.add('opacity-0');
-                    }, 3000);
+                    setTimeout(() => confirmationEl.classList.add('opacity-0'), 3000);
                 }
             };
-
-            // ---- MAIN EVENT LISTENER ----
+            
+            // --- EVENT LISTENERS ---
             document.body.addEventListener('click', (e) => {
-                // --- Star Rating Click Handler ---
-                const star = e.target.closest('#review-stars .star');
-                if (star) {
-                    const starsContainer = document.getElementById('review-stars');
-                    const rating = parseInt(star.dataset.index);
-                    starsContainer.dataset.rating = rating;
-                    starsContainer.innerHTML = renderStars(rating);
-                    lucide.createIcons();
-                    return; 
+                const target = e.target.closest('button, a');
+                
+                // Modal Close Logic
+                if (e.target.closest('.close-modal-btn') || e.target.matches('.modal')) {
+                    closeModal();
+                    return;
+                }
+                
+                if (!target) return; // Exit if click is not on a button or link
+
+                // --- Modal Triggers ---
+                if (target.matches('#search-icon-btn')) openModal('search-modal');
+                if (target.matches('#change-password-btn')) openModal('password-modal');
+                if (target.matches('#manage-addresses-btn')) openModal('address-modal');
+                if (target.matches('#add-new-address-form-btn')) {
+                    elements.newAddressForm.classList.remove('hidden');
+                    target.classList.add('hidden');
+                }
+                if (target.matches('#cancel-new-address-btn')) {
+                    elements.newAddressForm.classList.add('hidden');
+                    document.getElementById('add-new-address-form-btn').classList.remove('hidden');
                 }
 
-                // --- Button and Link Click Handler ---
-                const target = e.target.closest('button, a');
-                if (!target) return;
-
-                // Profile Page actions
+                // --- Page and Component Actions ---
                 if (target.matches('#edit-profile-btn')) setProfileEditMode(true);
                 if (target.matches('#save-profile-btn')) saveProfileChanges();
                 if (target.matches('#cancel-edit-btn')) setProfileEditMode(false);
 
-                // Other actions
                 if (target.matches('.add-to-cart-btn')) addToCart(target.dataset.id);
                 if (target.matches('.view-product-btn')) renderProductDetailPage(target.dataset.id);
+                if (target.matches('.view-product-from-search-btn')) renderProductDetailPage(target.dataset.id);
                 if (target.matches('.update-quantity-btn')) updateQuantity(target.dataset.id, target.dataset.change);
                 if (target.matches('.remove-from-cart-btn')) removeFromCart(target.dataset.id);
                 if (target.matches('.filter-btn')) renderShopPage(target.dataset.category);
@@ -501,14 +597,63 @@
                 
                 if (target.matches('.nav-link')) {
                     e.preventDefault();
-                    const targetPage = target.dataset.target;
-                    if (targetPage === 'cart') renderCartPage();
-                    showPage(targetPage);
+                    if (target.dataset.target === 'cart') renderCartPage();
+                    showPage(target.dataset.target);
                 }
 
-                if (target.matches('#mobile-menu-button')) {
-                    elements.mobileMenu.classList.toggle('hidden');
+                if (target.matches('#mobile-menu-button')) elements.mobileMenu.classList.toggle('hidden');
+
+                if (target.matches('#save-password-btn')) {
+                    const newPass = document.getElementById('new-password').value;
+                    const confirmPass = document.getElementById('confirm-password').value;
+                    if (newPass && newPass === confirmPass) {
+                        alert('Password changed successfully! (Simulation)');
+                        closeModal();
+                    } else {
+                        alert('New passwords do not match.');
+                    }
                 }
+                
+                if (target.matches('#save-new-address-btn')) {
+                    alert('New address saved! (Simulation)');
+                    elements.newAddressForm.classList.add('hidden');
+                    document.getElementById('add-new-address-form-btn').classList.remove('hidden');
+                    closeModal();
+                }
+
+                // Star rating handler
+                const star = e.target.closest('#review-stars .star');
+                if (star) {
+                    const starsContainer = document.getElementById('review-stars');
+                    const rating = parseInt(star.dataset.index);
+                    starsContainer.dataset.rating = rating;
+                    starsContainer.innerHTML = renderStars(rating);
+                    lucide.createIcons();
+                }
+            });
+            
+            // Search Input Listener
+            elements.searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                if (query.length > 1) {
+                    const results = products.filter(p => 
+                        p.name.toLowerCase().includes(query) || 
+                        p.description.toLowerCase().includes(query)
+                    );
+                    elements.searchPlaceholder.classList.add('hidden');
+                    elements.searchResultsContainer.innerHTML = results.length
+                        ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${results.map(p => renderProductCard(p, true)).join('')}</div>`
+                        : '<p class="text-center text-charcoal-light py-8">No products found.</p>';
+                } else {
+                    elements.searchPlaceholder.classList.remove('hidden');
+                    elements.searchResultsContainer.innerHTML = '';
+                }
+                lucide.createIcons();
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") closeModal();
             });
 
             // --- INITIALIZATION ---
